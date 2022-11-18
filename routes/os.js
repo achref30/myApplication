@@ -3,11 +3,50 @@ var router = express.Router();
 var os = require("os");
 
 router.get('/', function(req, res, next){
-    res.json({
-        hostname : os.hostname(),
-        type : os.type(),
-        platform : os.platform()
-    });
+    try{
+        const hostinfo = {
+            hostname : os.hostname(),
+            type : os.type(),
+            platform : os.platform()
+        }
+        if(!hostinfo){
+            //res.status(404).send('NOT FOUND');
+            throw new Error('No information aboutthe os');
+        };
+        res.status(200).json(osInformations);
+    }
+    catch(err){
+        res.status(500).send(err.message);
+    }
+});
+router.get("/cpus", function(req, res, next){
+    try {
+      const cpus = os.cpus();
+      if(!cpus){
+        throw new Error ('No informations about the CPUS');
+      }
+      res.status(200).json(cpus);      
+    }
+    catch(err){      
+      res.status(500).send(err.message);
+    }
+});
+
+router.get("/cpus/:id", function(req,res,next){
+    //const id = req.params.id; ou const {id}= req.params
+    try{
+        const {id} = req.params;
+        //console.log(id);
+        const cpus = os.cpus();
+        const condition = id<0 || id> cpus.length -1;
+        if(condition){
+            throw new Error('you must enter a valid id');
+        }
+        res.status(200).json(cpus[id]);
+    }
+    catch(err){
+      res.status(500).send(err.message);
+    }
 });
 module.exports = router;
 
