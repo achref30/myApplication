@@ -32,6 +32,26 @@ router.get('/:id', (req, res, next) => {
     //}
 });
 
+router.get('/instock/:qt', (req, res, next) => {
+    try {
+        const{qt}=req.params;  
+        const productsarray=Object.entries(products);
+        let productsinstock =[];
+        //console.log(productsarray);
+        productsarray && productsarray.map((element)=>{
+          if(element[1].stock>=qt){
+            productsinstock.push(element[1])
+          }
+          console.log(element);
+          
+        });
+        res.json(productsinstock);  
+      } catch (err) {
+    
+          res.status(500).send(err.message);
+      }
+});
+
 router.get('/:id/:qt', (req, res, next) => {
     try{
         //Object.keys(id);
@@ -52,5 +72,9 @@ router.get('/:id/:qt', (req, res, next) => {
         res.status(500).send(err.message);
     }
 });
+
+
+
+
 
 module.exports = router;
