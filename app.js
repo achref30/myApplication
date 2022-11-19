@@ -13,6 +13,18 @@ const productsRouter = require('./routes/products');
 //************************************************* */
 const mongoose = require('mongoose');
 const database = require('./database.json');
+mongoose.connect(
+  database.mongo.uri,
+  {
+    useNewUrlParser : true,
+    useUnifiedTopology : true
+  }
+).then(()=>{
+  console.log("connected to database");
+}).catch((err)=>{
+  console.log("failed")
+});
+
 const contactRouter = require('./routes/contacts');
 
 //************************************/
@@ -22,7 +34,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'twig');
 
 app.use(logger('dev'));
 //app.use(express.json());
