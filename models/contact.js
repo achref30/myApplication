@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const contactSchema = mongoose.Shema({
+const contactSchema = mongoose.Schema({
     FullName : {
         type : String,
         required : true,
