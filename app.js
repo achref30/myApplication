@@ -10,6 +10,11 @@ var usersRouter = require('./routes/users');
 //
 var osRouter = require('./routes/os');
 const productsRouter = require('./routes/products');
+//************************************************* */
+const mongoose = require('mongoose');
+const database = require('./database.json');
+const contactRouter = require('./routes/contacts');
+
 //************************************/
 
 
@@ -29,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hostinfo',osRouter);
 app.use('/products', productsRouter);
+app.use('/contacts', contactRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
