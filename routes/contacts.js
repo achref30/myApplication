@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const Contact = require("../models/contact")
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
+    const contactList = await Contact.find({});
     //res.json("contact route works");
-    res.render('form');
+    res.render('form', contactList);
 });
 
 router.post('/', async (req, res, next) => {
